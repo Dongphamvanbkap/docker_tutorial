@@ -1,0 +1,74 @@
+Docker base commands:
+   docker --version
+    docker run hello-world
+    docker images
+    docker pull ubuntu
+    docker run -it -d ubuntu
+    docker ps -a
+    docker exec -it <container_id> bash
+    exit
+    docker stop <container_id>
+    docker commit <container_id> dongphamvan/ubuntu
+    docker login
+    docker push dongphamvan/ubuntu
+    docker rm <container_id>
+    docker rmi <image_id>
+
+DockerFile commands:
+    #Usage: FROM [image_name]
+    FROM ubuntu
+
+    #Usage:RUN [command]
+    RUN apt-get install -y riak
+
+    #Usage: CMD application "argument", "argument", ...
+    CMD "echo" "Welcome to First Lesson"
+
+    #Usage: ENTRYPOINT application "argument", "argument", ...
+    ENTRYPOINT echo
+
+    #Usage: ADD [source directory or URL] [destination directory]
+    ADD /my_app_folder/my_app_folder
+
+    #Usage: ENV key value
+    ENV SERVER_WORKS 4
+
+    #Usage:
+    WORKDIR /path WORKDIR ~/
+
+    #Usage: EXPORT [port]
+    EXPORT 8080
+
+    #Usage: MAINTAINER [name]
+    MAINTAINER authors_name
+
+    #Usage: USER [uid]
+    USER 751
+
+    #Usage: VOLUME ["dir_1", "dir_2",]
+    VOLUME ["/my_files"]
+
+Creating an Image to Install Apache Web Server:
+#Dockerfile:
+FROM ubuntu:12.04
+
+RUN apt-get update
+RUN apt-get install -y apache2
+
+ENV APACHE_RUN_USER www-data
+ENV APACHE_RUN_GROUP www-data
+ENV APACHE_LOG_DIR /var/log/apache2
+
+RUN echo 'Hello, docker' > /var/www/index.html
+
+ENTRYPOINT ["/usr/sbin/apache2"]
+CMD ["-D", "FOREGROUND"]
+
+
+    docker build -t <image_name> .
+    docker run -p 80:80 --name=App1 <image_name>
+
+
+
+
+
